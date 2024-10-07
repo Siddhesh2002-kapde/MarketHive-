@@ -21,7 +21,7 @@ class MainCategory(models.Model):
     
 
 class SubCategory(models.Model):
-    main_category = models.ForeignKey(MainCategory,releated_name = "subcategories", on_delete = models.CASCADE)
+    main_category = models.ForeignKey(MainCategory,related_name = "subcategories", on_delete = models.CASCADE)
     name = models.CharField(max_length = 100)
 
 
@@ -36,7 +36,7 @@ class Product(models.Model):
     stock = models.PositiveIntegerField()
     main_category = models.ForeignKey(MainCategory, on_delete=models.CASCADE)
     sub_category = models.ForeignKey(SubCategory, on_delete = models.CASCADE)
-    image = models.ImageField(uploads_to = 'produts/')
+    image = models.ImageField(upload_to='products/')
 
 
     def __str__(self):
