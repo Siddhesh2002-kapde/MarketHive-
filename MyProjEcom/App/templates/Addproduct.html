@@ -15,16 +15,14 @@
             <label class="form-label"> Select Your Category:</label>
 
             <select class="form-select" name="category" id="category" onchange="this.form.submit()">
-                <option value="">Select a category</option>
                 {% for category in categories %}
-                <option value="{{ category.id }}"
-                    {% if category.id == request.POST.category|add:"" %}  <!-- Adding empty string to ensure comparison works -->
-                    selected
-                    {% endif %}>
-                    {{ category.name }}
-                </option>
+                    <option value="{{ category.id }}"
+                        {% if category.id == request.POST.category|add:"" %} selected {% endif %}>
+                        {{ category.name }}
+                    </option>
                 {% endfor %}
             </select>
+            
             
         </div>
 
@@ -48,7 +46,7 @@
         </div>
 
         <div class="md-5">
-            <label class="form-label"> Enter your Product Name:</label>
+            <label class="form-label"> Enter your Product Price:</label>
             <input class="form-control" type="number" name="product_price">
         </div>
         <div class="md-5">

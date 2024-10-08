@@ -19,6 +19,7 @@ def Addproduct(request):
         product_description = request.POST.get('product_description')
         product_price = request.POST.get('product_price')
         product_stock = request.POST.get('product_stock')
+        
         category_id = request.POST.get('category')
         subcategory_id = request.POST.get('subcategory')
         image = request.FILES.get('images')
@@ -34,10 +35,10 @@ def Addproduct(request):
         print(f"SubCategory ID: {subcategory_id}")
         print(f"Images is :{image}")
         
-        main_category = MainCategory.objects.get(id = category_id)
-        sub_category = SubCategory.objects.get(id = subcategory_id)
+       
         product_price = Product.objects.values_list('price', flat = True)
         product_stock = Product.objects.values_list('stock', flat = True)
+        print(product_stock)
         
         # queryset = Product.objects.create(
         #     name=product_name,
@@ -51,15 +52,13 @@ def Addproduct(request):
         # queryset.save() 
 
         
-    categories = MainCategory.objects.all()  # Retrieve all categories
-    subcategories = []
+        categories = MainCategory.objects.all()  # Retrieve all categories
+        subcategories = []
+        if category_id:
+            subcategories = SubCategory.objects.filter(main_category__id = category_id)
     
-    if category_id:
-        subcategories = SubCategory.objects.filter(main_category__id = category_id)
         
         
-    
-
     return render(request, 'Addproduct.html', {'categories': categories, 'subcategories': subcategories})
 
 
