@@ -33,7 +33,7 @@ class Product(models.Model):
     name = models.CharField(max_length = 255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2,null = True, blank = True)
-    stock = models.DecimalField(max_digits=10, decimal_places=2,null = True, blank = True)
+    stock = models.PositiveIntegerField(default=1)
     main_category = models.ForeignKey(MainCategory, on_delete=models.CASCADE)
     sub_category = models.ForeignKey(SubCategory, on_delete = models.CASCADE)
     image = models.ImageField(upload_to='products/')
