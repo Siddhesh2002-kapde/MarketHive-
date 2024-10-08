@@ -2,13 +2,76 @@
 
 
 {% block title %}
-  
-{% endblock  %}
+
+{% endblock %}
 
 
 {% block body %}
+<div class="container mx-auto col-6">
 
-<div class="container col-6 mx-auto">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="md-5">
+            <label class="form-label"> Select Your Category:</label>
+
+            <select class="form-select" name="category" id="category" onchange="this.form.submit()">
+                <option value="">Select a category</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}"
+                    {% if category.id == request.POST.category|add:"" %}  <!-- Adding empty string to ensure comparison works -->
+                    selected
+                    {% endif %}>
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+            
+        </div>
+
+        <div class="md-5">
+            <label class="form-label"> Select Your SubCategory:</label>
+
+            <select class="form-select" name="subcategory" id="">
+                {% for subcategory in subcategories %}
+                <option value="{{subcategory.id}}">{{subcategory.name}}</option>
+                {% endfor %}
+            </select>
+
+        </div>
+        <div class="md-5">
+            <label class="form-label"> Enter your Product Name:</label>
+            <input class="form-control" type="text" name="product_name">
+        </div>
+        <div class="md-5">
+            <label class="form-label"> Enter the product Description:</label>
+            <textarea class="form-control" name="product_description" id=""></textarea>
+        </div>
+
+        <div class="md-5">
+            <label class="form-label"> Enter your Product Name:</label>
+            <input class="form-control" type="number" name="product_price">
+        </div>
+        <div class="md-5">
+            <label class="form-label"> Enter your Product stock:</label>
+            <input class="form-control" type="number"  name="product_stock">
+        </div>
+
+        <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">Product</label>
+            <input class="form-control" type="file" name="images" id="formFileMultiple" multiple>
+        </div>
+
+
+        <div class="mb-5 my-4">
+
+            <button type="submit" class='btn btn-primary'>Add Product </button>
+        </div>
+
+    </form>
+</div>
+
+
+<!-- <div class="container col-6 mx-auto">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
@@ -50,7 +113,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Add Product</button>
     </form>
-</div>
+</div> -->
 
 <!-- <div class="container col-6 mx-auto">
     <form method="post" enctype="multipart/form-data">
@@ -108,4 +171,4 @@
       </form>
 </div>
   -->
-{% endblock  %}
+{% endblock %}

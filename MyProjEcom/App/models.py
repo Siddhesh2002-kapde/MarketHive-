@@ -14,7 +14,7 @@ class UserProfle(models.Model):
     
 
 class MainCategory(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100,unique=True)
 
     def __str__(self):
         return self.name
@@ -22,7 +22,7 @@ class MainCategory(models.Model):
 
 class SubCategory(models.Model):
     main_category = models.ForeignKey(MainCategory,related_name = "subcategories", on_delete = models.CASCADE)
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length = 100 , unique=True)
 
 
     def __str__(self):
@@ -32,8 +32,8 @@ class SubCategory(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length = 255)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    stock = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2,null = True, blank = True)
+    stock = models.DecimalField(max_digits=10, decimal_places=2,null = True, blank = True)
     main_category = models.ForeignKey(MainCategory, on_delete=models.CASCADE)
     sub_category = models.ForeignKey(SubCategory, on_delete = models.CASCADE)
     image = models.ImageField(upload_to='products/')
