@@ -17,12 +17,13 @@
             <select class="form-select" name="category" id="category" onchange="this.form.submit()">
                 {% for category in categories %}
                     <option value="{{ category.id }}"
-                        {% if category.id == request.POST.category|add:"" %} selected {% endif %}>
+                        {% if category.id == request.POST.category|add:"" %}  {{ category.name }} {% endif %}>
                         {{ category.name }}
                     </option>
                 {% endfor %}
             </select>
-            
+
+           
             
         </div>
 

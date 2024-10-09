@@ -50,7 +50,6 @@ def Addproduct(request):
         #     image=image
         # )
         # queryset.save() 
-
         
         categories = MainCategory.objects.all()  # Retrieve all categories
         subcategories = []
