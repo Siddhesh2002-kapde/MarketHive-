@@ -13,15 +13,17 @@
         {% csrf_token %}
         <div class="md-5">
             <label class="form-label"> Select Your Category:</label>
-
             <select class="form-select" name="category" id="category" onchange="this.form.submit()">
-                {% for category in categories %}
-                    <option value="{{ category.id }}"
-                        {% if category.id == request.POST.category|add:"" %}  {{ category.name }} {% endif %}>
-                        {{ category.name }}
+                {% for main_category in main_categories %}
+                    <option value="{{ main_category.id }}"
+                        {% if main_category_selected and main_category.id == main_category_selected.id %}
+                            selected
+                        {% endif %}>
+                        {{ main_category.name }}
                     </option>
                 {% endfor %}
             </select>
+            
 
            
             
@@ -31,8 +33,8 @@
             <label class="form-label"> Select Your SubCategory:</label>
 
             <select class="form-select" name="subcategory" id="">
-                {% for subcategory in subcategories %}
-                <option value="{{subcategory.id}}">{{subcategory.name}}</option>
+                {% for sub_category in sub_categories %}
+                <option value="{{sub_category.id}}">{{sub_category.name}}</option>
                 {% endfor %}
             </select>
 

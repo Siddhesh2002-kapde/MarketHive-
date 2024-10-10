@@ -1,5 +1,5 @@
-from unicodedata import category
-from django.shortcuts import render
+
+from django.shortcuts import render,redirect
 from App.models import *
 from decimal import Decimal
 
@@ -13,32 +13,42 @@ def index(request):
 
 
 def Addproduct(request):
+    main_category_selected = None
+    sub_categories = SubCategory.objects.none()
     if request.method == "POST":
         # Get form data
         product_name = request.POST.get('product_name')
         product_description = request.POST.get('product_description')
         product_price = request.POST.get('product_price')
         product_stock = request.POST.get('product_stock')
-        
-        category_id = request.POST.get('category')
-        subcategory_id = request.POST.get('subcategory')
+        main_category_id = request.POST.get('category')
+        sub_category_id = request.POST.get('subcategory')
         image = request.FILES.get('images')
         
-        
-        # product_price=Decimal(product_price)
-        # product_stock=Decimal(product_stock)
-        # Debugging prints
-        print(f"Product Name: {product_name}")
-        print(f"Product Description: {product_description}")
-        print(f"Product Price: {product_price}")
-        print(f"Category ID: {category_id}")
-        print(f"SubCategory ID: {subcategory_id}")
-        print(f"Images is :{image}")
         
        
         product_price = Product.objects.values_list('price', flat = True)
         product_stock = Product.objects.values_list('stock', flat = True)
         print(product_stock)
+        
+        if(main_category_id):
+            main_category_selected = MainCategory.objects.get(id = main_category_id)
+            sub_categories = SubCategory.objects.filter(main_category = main_category_selected)
+            
+            
+        if(sub_category_id and product_name and product_description ):
+            main_category = MainCategory.objects.get(id = main_category_id)
+            sub_category = SubCategory.objects.get(id = sub_category_id)
+            
+            print(main_category)
+            print(sub_category)
+            print(product_name)
+            print(product_description)
+            
+            
+            return redirect('/form')
+        
+        
         
         # queryset = Product.objects.create(
         #     name=product_name,
@@ -51,13 +61,15 @@ def Addproduct(request):
         # )
         # queryset.save() 
         
-        categories = MainCategory.objects.all()  # Retrieve all categories
-        subcategories = []
-        if category_id:
-            subcategories = SubCategory.objects.filter(main_category__id = category_id)
+    main_categories = MainCategory.objects.all()
     
-        
-        
-    return render(request, 'Addproduct.html', {'categories': categories, 'subcategories': subcategories})
+    context = {
+        'main_categories': main_categories,
+        'main_category_selected': main_category_selected,
+        'sub_categories': sub_categories,
+    }
+    
+    
+    return render(request, 'Addproduct.html', context)
 
 
